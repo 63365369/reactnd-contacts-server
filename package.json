@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "escape-string-regexp": "^1.0.5",
-    "prop-types": "^15.5.8",
+    "form-serialize": "^0.7.2",
+    "prop-types": "^15.6.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router-dom": "^4.2.2",

@@ -4,6 +4,7 @@ import './App.css'
 import { Route } from 'react-router-dom'
 import ListBooks from './ListBooks.js'
 import SearchBooks from './SearchBooks.js'
+import * as BooksAPI from './BooksAPI.js'
 
 class BooksApp extends React.Component {
   state = {
@@ -13,8 +14,14 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false
+    books : []
   }
+  componentDidMount(){
+    BooksAPI.getAll().then(
+      (books) =>{this.setState({books:books})}
+    )
+  }
+
   serachBook =(book)=>{
       
 }
@@ -22,7 +29,8 @@ class BooksApp extends React.Component {
     return (
       <div className="app">        
           <Route exact path="/" render={() =>(        
-            <ListBooks              
+            <ListBooks   
+              books={this.state.books}           
             />
           )}/>     
           <Route path="/search" render={({history}) =>(        
