@@ -1,23 +1,16 @@
 import React,{Component} from 'react'
 import { Link } from 'react-router-dom'
-//import sortBy from 'sort-by'
-import ListBookUtil from './ListBookUtil.js'
+
 
 class ListBooks extends Component{
-    
-    state ={
-        shelf:''
-    }
-    
     render(){
         const {books} = this.props
-        const {shelf} = this.state
+
         const shelves =[
             {name:'currentlyReading',title:'Currently Reading'},
             {name:'wantToRead',title:'Want to Read'},
             {name:'read',title:'Read'}
         ]
-        //showingShelfBooks.sort(sortBy('title'))
 
         return (
             <div className="list-books">
@@ -59,8 +52,7 @@ class ListBooks extends Component{
                     )}
                     </ol>
                 </div>
-                </div>))}
-                
+                </div>))}  
             </div>
             </div>
             <div className="open-search">
