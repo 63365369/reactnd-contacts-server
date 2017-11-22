@@ -15,7 +15,9 @@ class BooksApp extends React.Component {
      */
     showSearchPage: false
   }
-
+  serachBook =(book)=>{
+      
+}
   render() {
     return (
       <div className="app">        
@@ -23,8 +25,12 @@ class BooksApp extends React.Component {
             <ListBooks              
             />
           )}/>     
-          <Route path="/search" render={() =>(        
-            <SearchBooks              
+          <Route path="/search" render={({history}) =>(        
+            <SearchBooks    
+               onSerachBook={(book) =>{
+                this.serachBook(book)
+                history.push('/')
+            }}        
             />
           )}/>   
       </div>
