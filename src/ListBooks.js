@@ -1,10 +1,23 @@
 import React,{Component} from 'react'
 import { Link } from 'react-router-dom'
+//import sortBy from 'sort-by'
 
 class ListBooks extends Component{
     
+    state ={
+        shelf:''
+    }
 
     render(){
+        const {books} = this.props
+
+        let currentlyReadingBooks,wantToReadBooks,readBooks
+        currentlyReadingBooks= books.filter( book => book.shelf==='currentlyReading' ) 
+        wantToReadBooks  = books.filter( book => book.shelf==='wantToRead' ) 
+        readBooks = books.filter( book => book.shelf==='read' )
+        
+        //showingShelfBooks.sort(sortBy('title'))
+
         return (
             <div className="list-books">
             <div className="list-books-title">
@@ -16,7 +29,7 @@ class ListBooks extends Component{
                 <h2 className="bookshelf-title">Currently Reading</h2>
                 <div className="bookshelf-books">
                     <ol className="books-grid">
-                    {this.props.books.map((book) => (
+                    {currentlyReadingBooks.map((book) => (
                             <li key={book.id} className='book-list-item'>
                             <div className="book">
                             <div className="book-top">
@@ -49,7 +62,7 @@ class ListBooks extends Component{
                 <h2 className="bookshelf-title">Want to Read</h2>
                 <div className="bookshelf-books">
                     <ol className="books-grid">
-                    {this.props.books.map((book) => (
+                    {wantToReadBooks.map((book) => (
                         <li key={book.id} className='book-list-item'>
                         <div className="book">
                         <div className="book-top">
@@ -82,7 +95,7 @@ class ListBooks extends Component{
                 <h2 className="bookshelf-title">Read</h2>
                 <div className="bookshelf-books">
                     <ol className="books-grid">
-                    {this.props.books.map((book) => (
+                    {readBooks.map((book) => (
                             <li key={book.id} className='book-list-item'>
                             <div className="book">
                             <div className="book-top">
