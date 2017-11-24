@@ -1,16 +1,27 @@
 import React,{Component} from 'react'
 import { Link } from 'react-router-dom'
-
+import * as BooksAPI from './BooksAPI.js'
 
 class ListBooks extends Component{
-    render(){
-        const {books} = this.props
-
-        const shelves =[
+    state = {
+        shelves :[
             {name:'currentlyReading',title:'Currently Reading'},
             {name:'wantToRead',title:'Want to Read'},
             {name:'read',title:'Read'}
         ]
+      }
+    updateShelf = (book,shelf) =>{
+        BooksAPI.update(book,shelf) 
+        
+        this.setState(
+            {shelves:this.state.shelves} //应如何更新shelves？  
+          )   
+    }
+    
+    render(){
+        const {books} = this.props
+        const {shelves} = this.state
+        
 
         return (
             <div className="list-books">
@@ -35,7 +46,8 @@ class ListBooks extends Component{
                                     }}>
                                 </div>
                                 <div className="book-shelf-changer">
-                                <select>
+                                
+                                <select onClick={(event) => this.updateShelf(book,event.target.value)}>
                                     <option value="none" disabled>Move to...</option>
                                     <option value="currentlyReading">Currently Reading</option>
                                     <option value="wantToRead">Want to Read</option>
