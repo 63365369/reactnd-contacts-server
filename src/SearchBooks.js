@@ -4,15 +4,21 @@ import * as BooksAPI from './BooksAPI.js'
 
 class SearchBooks extends Component{
     state ={
-        books : []
+        booksInDep : [],
+        booksInShlef : []
     }
     serachBook =(query)=>{
         BooksAPI.search(query,10).then(
-          (books) =>{this.setState({books:books})}
+          (booksInDep) =>{this.setState({booksInDep:booksInDep})}
         )   
     }
-    updateShelf = (book,shelf) =>{
-        BooksAPI.update(book,shelf)   
+    queryBook =(bookid)=>{
+        BooksAPI.get(bookid).then(
+          (booksInShlef) =>{this.setState({booksInShlef:booksInShlef})}
+        )   
+    }
+    updateShelf = (bookInDep,shelf) =>{
+        BooksAPI.update(bookInDep,shelf)   
     }
     render(){
         return (
@@ -37,19 +43,18 @@ class SearchBooks extends Component{
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-              {this.state.books.map((book) => (
-                            <li key={book.id} className='book-list-item'>
+              {this.state.booksInDep.map((bookInDep) => (
+                            <li key={bookInDep.id} className='book-list-item'>
                             <div className="book">
                             <div className="book-top">
                                 <div className="book-cover" 
                                     style={{ width: 128, 
                                         height: 193, 
-                                        backgroundImage: `url(${book.imageLinks.smallThumbnail})`
+                                        backgroundImage: `url(${bookInDep.imageLinks.smallThumbnail})`
                                     }}>
                                 </div>
                                 <div className="book-shelf-changer">
-                                
-                                <select onChange={(event) => this.updateShelf(book,event.target.value)}>
+                                <select  value='none' onChange={(event) => this.updateShelf(bookInDep,event.target.value)}>
                                     <option value="none" disabled>Move to...</option>
                                     <option value="currentlyReading">Currently Reading</option>
                                     <option value="wantToRead">Want to Read</option>
@@ -58,8 +63,8 @@ class SearchBooks extends Component{
                                 </select>
                                 </div>
                             </div>
-                            <div className="book-title">{book.title}</div>
-                            <div className="book-authors">{book.authors}</div>
+                            <div className="book-title">{bookInDep.title}</div>
+                            <div className="book-authors">{bookInDep.authors}</div>
                             </div>   
                             </li>    
                         )

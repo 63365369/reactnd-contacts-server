@@ -12,7 +12,6 @@ class ListBooks extends Component{
       }
     updateShelf = (book,shelf) =>{
         BooksAPI.update(book,shelf) 
-        
         this.setState(
             {shelves:this.state.shelves} //应如何更新shelves？  
           )   
@@ -47,7 +46,7 @@ class ListBooks extends Component{
                                 </div>
                                 <div className="book-shelf-changer">
                                 
-                                <select onClick={(event) => this.updateShelf(book,event.target.value)}>
+                                <select value={book.shelf} onChange={(event) => this.updateShelf(book,event.target.value)}>
                                     <option value="none" disabled>Move to...</option>
                                     <option value="currentlyReading">Currently Reading</option>
                                     <option value="wantToRead">Want to Read</option>
