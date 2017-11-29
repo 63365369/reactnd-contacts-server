@@ -21,18 +21,30 @@ class BooksApp extends React.Component {
       (books) =>{this.setState({books:books})}
     )
   }
-
+  updateShelf = (book,shelf) =>{
+    BooksAPI.update(book, shelf).then(() => {
+      book.shelf = shelf
+      // Filter out the book and append it to the end of the list
+      // so it appears at the end of whatever shelf it was added to.
+      this.setState(state => ({
+        books: this.state.books.filter(b => b.id !== book.id).concat([ book ])
+      }))
+    })  
+}
 
   render() {
     return (
       <div className="app">        
           <Route exact path="/" render={() =>(        
             <ListBooks   
-              books={this.state.books}           
+              books={this.state.books}
+              updateShelf = {(book,shelf)=> {this.updateShelf(book,shelf)} }          
             />
           )}/>     
           <Route path="/search" render={() =>(        
-            <SearchBooks    
+            <SearchBooks
+              books={this.state.books}
+              updateShelf = {(book,shelf)=> {this.updateShelf(book,shelf)} }    
             />
           )}/>   
       </div>

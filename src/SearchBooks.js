@@ -4,21 +4,15 @@ import * as BooksAPI from './BooksAPI.js'
 
 class SearchBooks extends Component{
     state ={
-        booksInDep : [],
-        booksInShlef : []
+        booksInDep : []
     }
     serachBook =(query)=>{
         BooksAPI.search(query,10).then(
-          (booksInDep) =>{this.setState({booksInDep:booksInDep})}
-        )   
-    }
-    queryBook =(bookid)=>{
-        BooksAPI.get(bookid).then(
-          (booksInShlef) =>{this.setState({booksInShlef:booksInShlef})}
-        )   
-    }
-    updateShelf = (bookInDep,shelf) =>{
-        BooksAPI.update(bookInDep,shelf)   
+            (booksInDep) =>{this.setState({booksInDep:booksInDep})}//,
+          /*this.setState(state => ({
+            booksInDep: this.state.booksInDep.filter(b => b.id === this.props.books.id).map(shelf=>this.props.books.shelf)
+          }))*/
+        )         
     }
     render(){
         return (
@@ -54,7 +48,7 @@ class SearchBooks extends Component{
                                     }}>
                                 </div>
                                 <div className="book-shelf-changer">
-                                <select  value='none' onChange={(event) => this.updateShelf(bookInDep,event.target.value)}>
+                                <select  value="none" onChange={(event) => this.props.updateShelf(bookInDep,event.target.value)}>
                                     <option value="none" disabled>Move to...</option>
                                     <option value="currentlyReading">Currently Reading</option>
                                     <option value="wantToRead">Want to Read</option>

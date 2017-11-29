@@ -1,20 +1,7 @@
 import React,{Component} from 'react'
 import { Link } from 'react-router-dom'
-import * as BooksAPI from './BooksAPI.js'
 
-class ListBooks extends Component{
-    updateShelf = (book,shelf) =>{
-          BooksAPI.update(book, shelf).then(() => {
-            book.shelf = shelf
-    
-            // Filter out the book and append it to the end of the list
-            // so it appears at the end of whatever shelf it was added to.
-            this.setState(state => ({
-              books: this.props.books.filter(b => b.id !== book.id).concat([ book ])
-            }))
-          })  
-    }
-    
+class ListBooks extends Component{    
     render(){
         const {books} = this.props
         const shelves=[
@@ -48,7 +35,7 @@ class ListBooks extends Component{
                                 </div>
                                 <div className="book-shelf-changer">
                                 
-                                <select value={book.shelf} onChange={(event) => this.updateShelf(book,event.target.value)}>
+                                <select value={book.shelf} onChange={(event) => this.props.updateShelf(book,event.target.value)}>
                                     <option value="none" disabled>Move to...</option>
                                     <option value="currentlyReading">Currently Reading</option>
                                     <option value="wantToRead">Want to Read</option>

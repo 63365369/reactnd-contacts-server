@@ -140,7 +140,7 @@ updateShelf = (book,shelf) =>{
     }
 ##步骤6增加search页面函数
 
-##待解决:图书状态无法正确更新，1）图书状态调整后无法自动刷新主页面;2）查询页面新增图书返回主页面没有自动更新；3）查询页面的书籍不能对应主页面的书架状态
+##待解决:图书状态无法正确更新，1）图书状态调整后无法自动刷新主页面;--解决2）查询页面新增图书返回主页面没有自动更新；--解决3）查询页面的书籍不能对应主页面的书架状态
 ##待优化：图书查询功能，目前通过text的onchange实现,输入一个字符就搜索,需优化
 
 ##修改1：shelves不会变化，从state中调整到无状态组件
@@ -149,3 +149,16 @@ updateShelf = (book,shelf) =>{
 this.setState(state => ({
               books: this.props.books.filter(b => b.id !== book.id).concat([ book ])
             }))
+##修改3：updateshelf改为app.js中定义，在ListBooks和SearchBooks中复用
+##修改4（未解决）：如果想让主页和搜索页面的图书状态保持一致，这里也需要把状态传过去。在搜索页面拿到的图书列表是没有 shelf 这个属性的，这个时候就可以把两边的记录做个比较，更新搜索页面图书的 shelf 属性，这样两个页面上的图书属性就能保持一致了。
+
+#如何运行
+##STEP1 把reactnd-project-myreads-starter源码取到本地文件夹
+##STEP2 运行npm install -g create-react-app安装react
+##STEP3 安装运行本应用所需的包
+npm install --save prop-types
+npm install --save escape-string-regexp sort-by
+npm install --save react-router-dom
+npm install --save form-serialize
+##STEP4 执行npm start 运行应用
+##STEP5 打开http://localhost:3000/访问图书跟踪应用，在首页面查看书架信息并实现图书在书架之间的切换，点击右下角的+号切换到更多图书查询页面
