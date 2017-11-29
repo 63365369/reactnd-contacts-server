@@ -142,3 +142,10 @@ updateShelf = (book,shelf) =>{
 
 ##待解决:图书状态无法正确更新，1）图书状态调整后无法自动刷新主页面;2）查询页面新增图书返回主页面没有自动更新；3）查询页面的书籍不能对应主页面的书架状态
 ##待优化：图书查询功能，目前通过text的onchange实现,输入一个字符就搜索,需优化
+
+##修改1：shelves不会变化，从state中调整到无状态组件
+##修改2：shelf更新：在后端状态更新后，更新组件状态。
+直接更新的父组件的books的状态？？
+this.setState(state => ({
+              books: this.props.books.filter(b => b.id !== book.id).concat([ book ])
+            }))

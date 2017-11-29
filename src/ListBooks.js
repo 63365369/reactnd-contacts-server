@@ -3,23 +3,25 @@ import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI.js'
 
 class ListBooks extends Component{
-    state = {
-        shelves :[
-            {name:'currentlyReading',title:'Currently Reading'},
-            {name:'wantToRead',title:'Want to Read'},
-            {name:'read',title:'Read'}
-        ]
-      }
     updateShelf = (book,shelf) =>{
-        BooksAPI.update(book,shelf) 
-        this.setState(
-            {shelves:this.state.shelves} //应如何更新shelves？  
-          )   
+          BooksAPI.update(book, shelf).then(() => {
+            book.shelf = shelf
+    
+            // Filter out the book and append it to the end of the list
+            // so it appears at the end of whatever shelf it was added to.
+            this.setState(state => ({
+              books: this.props.books.filter(b => b.id !== book.id).concat([ book ])
+            }))
+          })  
     }
     
     render(){
         const {books} = this.props
-        const {shelves} = this.state
+        const shelves=[
+            {name:'currentlyReading',title:'Currently Reading'},
+            {name:'wantToRead',title:'Want to Read'},
+            {name:'read',title:'Read'}
+        ]
         
 
         return (
